@@ -4,4 +4,4 @@ BP_Filter.ino - C for Bandpass filter with some hard-coded waves already include
 
 FilterDesignManual.ino - original C file for Hilbert filter with hard-coded coefficient values. Replicates MATLAB output (and documentation) nearly perfectly. 7/15/22 - Now calculates phase
 
-allCombined.ino - combines the bandpass, hilbert filters with phase extraction. About 1.2ms per entry.
+Working_Without_Analog.ino - combines the bandpass, hilbert filters with phase extraction. About 10 ms per 1300 entries (7.6 microseconds per entry).
