@@ -6,5 +6,6 @@ FilterDesignManual.ino - original C file for Hilbert filter with hard-coded coef
 
 Working_Without_Analog.ino - combines the bandpass, hilbert filters with phase extraction. About 10 ms per 1300 entries (7.6 microseconds per entry).
 
+FIFO.ino - FIFO approach to data WITHOUT analog input at this point. 3-4ms processing time per entry.
 
-FIFO.ino - FIFO approach to data WITHOUT analog input at this point. 3-4ms processing time per entry. Currently phase shifted, needs to be fixed. 
+FIFO_RT.ino - FIFO approach to data USING REAL TIME analog input. 5-6ms processing time per entry. Currently phase shifted and needs to be fixed.
