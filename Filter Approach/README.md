@@ -10,4 +10,4 @@ FIFO.ino - FIFO approach to data WITHOUT analog input at this point. 3-4ms proce
 
 FIFO_RT.ino - FIFO approach to data USING REAL TIME analog input. 5-6ms processing time per entry. Currently phase shifted and needs to be fixed.
 
-FIFO_RT_DIG.inno - FIFO approach with real data. Digital signals outputted from teensy at phase values changeable in code (one variable). 5-6ms delay on non-interested entries, 8-9ms delay on entries of interest.
+FIFO_RT_DIG.ino - FIFO approach with real data. Digital signals outputted from teensy at phase values changeable in code (one variable). 5-6ms delay on non-interested entries, 8-9ms delay on entries of interest.
