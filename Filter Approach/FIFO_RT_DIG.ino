@@ -27,8 +27,8 @@ void setup() {
   analogReadResolution(8);
 
 
-for(int l = 0; l < samples; l++) {
-  buf[l] = analogRead(A0);
+for(int l = 0; l < samples; l++) { // This loop fills the buffer so that the hilbert convolution works properly and that FIFO works.
+  buf[l] = analogRead(A0); 
   //Serial.println(analogRead(A0));
 }
 
@@ -51,19 +51,23 @@ void loop() {
 
   //if(currTimeA - execTimeA >= intTimeA) {
 
-  for(int p = 0; p < samples - inc; p++) {
+  for(int p = 0; p < samples - inc; p++) { // This moves each element of the array to the left. (FIFO)
     buf[p] = buf[p+1];
   }
   
   for(int u = inc; u > 0; u--) {
     execTimeA = micros();
-    buf[samples - u] = analogRead(A0);
+    buf[samples - u] = analogRead(A0); // This fills the last element of the array with analogRead() input.
   }
   
   
   for(int a = 0; a < samples; a++) {
-    filtered[a] = filtersRT.lowpass(filtersRT.highpass(buf[a], 2, fs), 4, fs);
+    filtered[a] = filtersRT.lowpass(filtersRT.highpass(buf[a], 2, fs), 4, fs); //bandpass filter
   }
+  
+  
+  // Start of hilbert convolution
+  
   
     for (k = 0; k < samples; k++)  //  position in output
     {
@@ -92,11 +96,15 @@ void loop() {
     }
 
 
+  // end of hilbert convolution
+  
 
   //Serial.println(micros());
 
 
 /*
+  
+  // all this in this commented out block is graphing for plots. Omitted to preserve real-time processing.
   
   for(int u = inc; u > 0; u--) {
   Serial.print(buf[samples -u]/500);
@@ -108,12 +116,12 @@ void loop() {
 
 */
 
-double ph = atan2(real[samples- ((coefLen - 1)/2) - 1], imag[samples - ((coefLen - 1)/2) - 1]);
+double ph = atan2(real[samples- ((coefLen - 1)/2) - 1], imag[samples - ((coefLen - 1)/2) - 1]); // phase calculation
 //Serial.println(ph);
 
-desiredPhase = -1.57; // -pi/2
+desiredPhase = -1.57; // desired phase in radians.
 
-if(ph <= desiredPhase+0.1 && ph >= desiredPhase-0.1) {
+if(ph <= desiredPhase+0.1 && ph >= desiredPhase-0.1) { // a margin of 0.1 radians is used to ensure the desired phase is approximately captured.
   digitalWrite(pinNumber, HIGH);
   delay(2);
   digitalWrite(pinNumber, LOW);
