@@ -5,7 +5,7 @@ fs = 30000;
 bp = bandpass(x, [6 10], fs);
 
 a = sarulloBP(x,h2);
-
+hilb = sarulloBP(a, coeffs);
 
 
 
@@ -29,7 +29,7 @@ xlim([50000 200000])
 
 subplot(3,1,3)
 hold on
-plot(angle(hilbert(a)), 'Color', 'k')
+plot(angle(hilb), 'Color', 'k')
 plot(angle(hilbert(bp)), 'Color','c')
 title('MATLAB Baseline + Mine OVERLAY')
 xlabel('Samples')
