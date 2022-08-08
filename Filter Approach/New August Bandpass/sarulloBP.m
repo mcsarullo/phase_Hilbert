@@ -11,7 +11,9 @@ function bandp = sarulloBP(x, h)
             bandp(n) = tmp;
             end  
 
-    bandp(1:length(bandp) - delayInSamples) = bandp(delayInSamples + 1:length(bandp));
+
+    %this corrects the delay
+     %bandp(1:length(bandp) - delayInSamples) = bandp(delayInSamples + 1:length(bandp));
 
 end
 
