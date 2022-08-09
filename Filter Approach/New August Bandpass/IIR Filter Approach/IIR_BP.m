@@ -6,17 +6,17 @@ x = x(1:1000000);
 fs = 3000;
 bp = bandpass(x, [6 10], fs);
 
-a = filtfilt(SOS,G,x);
 
-%hilb = sarulloBP(a, coeffs, 'h');
+[b, a] = sos2tf(SOS,G);
 
-%phase = atan2(hilb, a);
+output = sarulloIIR(x,b,a);
+
 
 
 
 subplot(3,1,1)
 hold on
-plot(a, 'Color', 'k')
+plot(output, 'Color', 'k')
 legend('IIR OUTPUT')
 
 title('My IIR Bandpass Filter @ 3 kHz Sampling Rate Cheby II; 24 taps')
@@ -28,7 +28,7 @@ xlim([pointer pointer+bands])
 subplot(3,1,2)
 hold on
 plot(bp)
-plot(a)
+plot(output)
 legend('MATLAB bandpass()', 'My IIR Filter')
 title('MATLAB Baseline with IIR Output Overlay')
 xlabel('Samples')
@@ -38,7 +38,7 @@ xlim([pointer pointer+bands])
 
 subplot(3,1,3)
 hold on
-plot(angle(hilbert(a)), 'Color', 'k')
+plot(angle(hilbert(output)), 'Color', 'k')
 plot(angle(hilbert(bp)), 'Color','c')
 title('MATLAB Baseline + Mine OVERLAY - PHASE; Both computed using angle() and hilbert()')
 legend('MATLAB', 'My IIR Filter')
