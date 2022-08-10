@@ -1,27 +1,16 @@
 function y = sarulloIIR(x, b, a)
-y = zeros(1, length(x));
-
-for n = 1:length(x)
-atmp = 0;
-btmp = 0;
-
-    for l = 2:length(a)
-        if n-l + 1 < 1
-            atmp = atmp + 0;
-        else
-            atmp = atmp + (a(l) * y(n-l + 1));
-        end
+%b = b ./ a(1);
+%a = a./ a(1);
+n = length(a);
+z(n) = 0;
+t = zeros(size(x));
+for m = 1:length(t)
+    Xm = x(m)
+    t(m) = b(1) * Xm + z(1)
+    Ym = t(m)
+    for i = 2:n
+        z(i-1) = b(i) * Xm + z(i) - a(i) * Ym
     end
-    
-    for k = 1:length(b)
-        if n-k + 1 < 1
-            btmp = btmp + 0;
-        else
-            btmp = btmp + (b(k) * x(n-k + 1));
-        end
-    end
-
-y(n) = atmp + btmp;
-
 end
+y = z;
 end
