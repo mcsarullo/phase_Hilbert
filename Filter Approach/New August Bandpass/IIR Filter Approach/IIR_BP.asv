@@ -12,11 +12,11 @@ bp = bandpass(x, [6 10], fs);
 %output = filtfilt(b,a, x);
 %output = sarulloIIR(x,b,a);
 %output = emulateFILTER(a,b,x,G);
-output = filter(b,a,x);
+output = prod(G)*sosfilt(SOS,x);
 
 u = 0:1/3000:2000 * pi;
 sinwave = 100 * (sin(2 * pi * 10 * u) + sin(2 * pi * 20 * u));
-outputSin = sosfilt(SOS, sinwave);
+outputSin = prod(G)*sosfilt(SOS, sinwave);
 
 subplot(3,1,1)
 hold on
@@ -34,7 +34,7 @@ xlim([pointer, pointer+bands])
 subplot(3,1,2)
 hold on
 plot(bp)
-plot(output)
+%plot(output)
 
 %legend('MATLAB bandpass()', 'My IIR Filter')
 title('MATLAB Baseline with IIR Output Overlay')

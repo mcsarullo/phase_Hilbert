@@ -1,4 +1,4 @@
-function Y = emulateFILTER(b, a, X)
+function Y = emulateFILTER(b, a, X,G)
 % Author: Jan Simon, Heidelberg, (C) 2011
 n    = length(a);
 z(n) = 0;      % Creates zeros if input z is omitted
@@ -8,6 +8,6 @@ Y    = zeros(size(X));
 for m = 1:length(Y)
    Y(m) = b(1) * X(m) + z(1);
    for i = 2:n
-      z(i - 1) = b(i) * X(m) + z(i) - a(i) * Y(m);
+      z(i - 1) = prod(G)*(b(i) * X(m) + z(i) - a(i) * Y(m));
    end
 end
