@@ -1,4 +1,4 @@
-pointer = 45000;
+pointer = 100000;
 bands = 30000;
 x = downsample(eeg30000Hz, 10);
 x = x(1:1000000);
@@ -9,10 +9,8 @@ bp = bandpass(x, [6 10], fs);
 
 [b,a] = sos2tf(SOS,G);
 
-%output = filtfilt(b,a, x);
-%output = sarulloIIR(x,b,a);
-%output = emulateFILTER(a,b,x,G);
 output = filter(b,a,x);
+hilbby = filter(coeffs, 1, output);
 
 u = 0:1/3000:2000 * pi;
 sinwave = 100 * (sin(2 * pi * 10 * u) + sin(2 * pi * 20 * u));
@@ -21,11 +19,12 @@ outputSin = sosfilt(SOS, sinwave);
 subplot(3,1,1)
 hold on
 plot(output, 'Color', 'k')
-%plot(x-mean(x))
+%plot(x)
+plot(x-mean(x))
 %plot(sinwave);
 %plot(outputSin);
 legend('IIR OUTPUT')
-title('My IIR Bandpass Filter @ 3 kHz Sampling Rate Cheby II; 24 taps')
+title('My IIR Bandpass Filter @ 3 kHz Sampling Rate Cheby II; 4 taps')
 xlabel('Samples')
 ylabel('Magnitude')
 xlim([pointer, pointer+bands])
@@ -45,7 +44,7 @@ xlim([pointer pointer+bands])
 
 subplot(3,1,3)
 hold on
-plot(angle(hilbert(output)), 'Color', 'k')
+plot(atan2(hilbby(1:length(hilbby)-10),output(11:length(hilbby))), 'Color', 'k')
 plot(angle(hilbert(bp)), 'Color','c')
 title('MATLAB Baseline + Mine OVERLAY - PHASE; Both computed using angle() and hilbert()')
 legend('My IIR Filter','MATLAB')
