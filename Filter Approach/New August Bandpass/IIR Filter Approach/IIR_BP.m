@@ -9,12 +9,13 @@ bp = bandpass(x, [6 10], fs);
 
 [b,a] = sos2tf(SOS,G);
 
-output = filter(b,a,x);
-hilbby = filter(coeffs, 1, output);
 
-u = 0:1/3000:2000 * pi;
-sinwave = 100 * (sin(2 * pi * 10 * u) + sin(2 * pi * 20 * u));
-outputSin = sosfilt(SOS, sinwave);
+output = filter(b,a,x);
+%hilbby = filter(coeffs, 1, output);
+
+%u = 0:1/3000:2000 * pi;
+%sinwave = 100 * (sin(2 * pi * 10 * u) + sin(2 * pi * 20 * u));
+%outputSin = sosfilt(SOS, sinwave);
 
 subplot(3,1,1)
 hold on
@@ -44,7 +45,7 @@ xlim([pointer pointer+bands])
 
 subplot(3,1,3)
 hold on
-plot(atan2(hilbby(1:length(hilbby)-10),output(11:length(hilbby))), 'Color', 'k')
+plot(angle(hilbert(output)), 'Color', 'k')
 plot(angle(hilbert(bp)), 'Color','c')
 title('MATLAB Baseline + Mine OVERLAY - PHASE; Both computed using angle() and hilbert()')
 legend('My IIR Filter','MATLAB')
