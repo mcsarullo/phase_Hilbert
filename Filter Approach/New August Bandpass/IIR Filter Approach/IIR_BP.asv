@@ -1,6 +1,6 @@
 pointer = 100000;
 bands = 30000;
-x = downsample(eeg30000Hz, 10);
+x = downsample(eeg30000Hz, 18);
 x = x(1:1000000);
 %cLen = length(h2);
 fs = 3000;
@@ -9,11 +9,13 @@ bp = bandpass(x, [6 10], fs);
 
 [b,a] = sos2tf(SOS,G);
 
-output = filter(b,a,x);
 
-u = 0:1/3000:2000 * pi;
-sinwave = 100 * (sin(2 * pi * 10 * u) + sin(2 * pi * 20 * u));
-outputSin = sosfilt(SOS, sinwave);
+output = filter(b,a,x);
+%hilbby = filter(coeffs, 1, output);
+
+%u = 0:1/3000:2000 * pi;
+%sinwave = 100 * (sin(2 * pi * 10 * u) + sin(2 * pi * 20 * u));
+%outputSin = sosfilt(SOS, sinwave);
 
 subplot(3,1,1)
 hold on
@@ -23,7 +25,7 @@ plot(x-mean(x))
 %plot(sinwave);
 %plot(outputSin);
 legend('IIR OUTPUT')
-title('My IIR Bandpass Filter @ 3 kHz Sampling Rate Cheby II; 24 taps')
+title('My IIR Bandpass Filter @ 3 kHz Sampling Rate Cheby II; 4 taps')
 xlabel('Samples')
 ylabel('Magnitude')
 xlim([pointer, pointer+bands])
@@ -33,7 +35,8 @@ subplot(3,1,2)
 hold on
 plot(bp)
 plot(output)
-
+plot(angle(hilbert(output)), 'Color', 'k')
+plot(angle(hilbert(bp)), 'Color','c')
 %legend('MATLAB bandpass()', 'My IIR Filter')
 title('MATLAB Baseline with IIR Output Overlay')
 xlabel('Samples')

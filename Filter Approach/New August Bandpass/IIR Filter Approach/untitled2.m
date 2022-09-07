@@ -1,13 +1,28 @@
-L = 231;
-n = -L:L; % index n from [-40,-39,....,-1,0,1,...,39,40];
-h = 1./(pi*n); %impulse response of Hilbert Transform
-h(L+1) = 0; %Corresponds to the 0/0 term (for 41st term, 0, in n vector above)
+%L = 231;
+%n = -L:L; % index n from [-40,-39,....,-1,0,1,...,39,40];
+%h = 1./(pi*n); %impulse response of Hilbert Transform
+%h(L+1) = 0; %Corresponds to the 0/0 term (for 41st term, 0, in n vector above)
+    
+    N = 200;      % filter length of FIR Hilbert transformer is 2*N+1
+    nn = (1:N)';
+    g = 3*(cos(pi*nn/10)).^2./ (pi*nn);
+    g = [-g(N:-1:1);0;g];
+    hw = hamming(2*N+1);
+    h = g.*hw(:);
+    h=h';% windowed coefficients
 
 xhat = filter(h,1,output); %resultant from Hilbert Transform H(w);
-
+a = 27;
 hold on
 %plot(xhat)
 plot(output)
-plot(atan2(xhat,output) * -1)
+
+real = output(1:length(output)-N);
+imag = xhat(1+N:length(xhat));
+
+
+phase = atan2(real,imag) * -1;
+
+plot(phase(N/2:length(phase)))
 plot(angle(hilbert(output)))
-xlim([10000 30000])
+xlim([20000 40000])

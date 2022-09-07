@@ -34,7 +34,7 @@ xlim([pointer, pointer+bands])
 subplot(3,1,2)
 hold on
 plot(bp)
-plot(output)
+plot(output(400:length(output)))
 
 %legend('MATLAB bandpass()', 'My IIR Filter')
 title('MATLAB Baseline with IIR Output Overlay')
@@ -45,11 +45,13 @@ xlim([pointer pointer+bands])
 
 subplot(3,1,3)
 hold on
-plot(angle(hilbert(output)), 'Color', 'k')
-plot(angle(hilbert(bp)), 'Color','c')
+plot(angle(hilbert(output(400:length(output)))), 'Color', 'k')
+plot(angle(hilbert(bp(1:length(bp)-400+1))), 'Color','c')
 title('MATLAB Baseline + Mine OVERLAY - PHASE; Both computed using angle() and hilbert()')
 legend('My IIR Filter','MATLAB')
 xlabel('Samples')
 ylabel('Magnitude')
 xlim([pointer pointer+bands])
 ylim([-4 4])
+
+output=output(400:length(output));
