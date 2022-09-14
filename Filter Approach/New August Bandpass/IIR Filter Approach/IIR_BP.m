@@ -1,13 +1,13 @@
-pointer = 100000;
+pointer = 0;
 bands = 30000;
 x = downsample(eeg30000Hz, 10);
-x = x(1:1000000);
+x = x(1:15000);
 %cLen = length(h2);
 fs = 3000;
 bp = bandpass(x, [6 10], fs);
 
 
-[b,a] = sos2tf(SOS,G);
+[b,a] = sos2tf(SOS,G)
 
 
 output = filter(b,a,x);

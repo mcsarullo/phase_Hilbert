@@ -12,7 +12,6 @@
     h=h';% windowed coefficients
 
 xhat = filter(h,1,output); %resultant from Hilbert Transform H(w);
-a = 27;
 hold on
 %plot(xhat)
 plot(output)
@@ -21,8 +20,8 @@ real = output(1:length(output)-N);
 imag = xhat(1+N:length(xhat));
 
 
-phase = atan2(real,imag) * -1;
+phase = atan2(imag,real);
 
-plot(phase(N/2:length(phase)))
-plot(angle(hilbert(output)))
-xlim([20000 40000])
+plot(phase)
+%plot(angle(hilbert(output)))
+xlim([0 15000])
