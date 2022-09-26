@@ -7,7 +7,7 @@ fs = 3000;
 bp = bandpass(x, [6 10], fs);
 
 
-[b,a] = sos2tf(SOS,G)
+[b,a] = sos2tf(SOS,G);
 
 
 output = filter(b,a,x);

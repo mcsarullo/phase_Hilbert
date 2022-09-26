@@ -12,7 +12,8 @@ IIRFilter iir(b, a);
 
 void setup() {
   Serial.begin(115200);
-  analogReadResolution(12);
+  analogReadResolution(8);
+  analogReadAveraging(4);
     /*for(int i = 0; i < 16000; i++) {
       double out = iir.filter(x[i]);
       Serial.println(out);
@@ -21,11 +22,12 @@ void setup() {
   
 }
 int in;
+double desiredPhase = 0;
 int counter = 0;
 double outBP;
 int bufferCounter = 0;
-double realLag[387] = {0};
-int lag = 386;
+double realLag[201] = {0};
+int lag = 200;
 double firBuffer[401] = {0}; 
 int bufLen = 401; // This length is = to the # of hilbert coeffs
 double outH;
@@ -37,7 +39,8 @@ void loop() {
 
 
   
-    in = x[counter];
+    in = analogRead(A0);
+    startTime = micros();
     outBP = iir.filter(in);
     //Serial.println(outBP);
     if(bufferCounter < bufLen) { // STARTUP
@@ -48,7 +51,7 @@ void loop() {
       }
     }
     else {
-      startTime = micros();
+      
       for(int j = 0; j < lag; j++) { // FIFO REFILL
         realLag[j] = realLag[j + 1];
       }
@@ -67,11 +70,22 @@ void loop() {
       
       outH = tmp;
       
-      p = atan2(outH,realLag[0])*-1;
+      p = atan2(outH, realLag[0]);
+      if(p > desiredPhase - 0.06 && p < desiredPhase + 0.06) {
+        digitalWrite(0, HIGH);
+        delayMicroseconds(100);
+        digitalWrite(0, LOW);
+        delayMicroseconds(175);
+     
+      }
+      else {
+        delayMicroseconds(275);
+      }
       Serial.print(p);
       Serial.print(",");
-      Serial.println(outBP);
-      delay(5);
+      Serial.println(outBP/20);
+      //delay(5);
+      
       
       
     }
