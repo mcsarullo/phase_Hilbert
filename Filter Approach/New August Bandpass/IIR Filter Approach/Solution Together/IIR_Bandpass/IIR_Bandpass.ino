@@ -34,6 +34,7 @@ double outH;
 double tmp;
 double p;
 int startTime;
+bool danZaitz = true; 
 
 void loop() {
 
@@ -71,14 +72,24 @@ void loop() {
       outH = tmp;
       
       p = atan2(outH, realLag[0]);
-      if(p > desiredPhase - 0.06 && p < desiredPhase + 0.06) {
+      if(p > desiredPhase - 0.05 && p < desiredPhase + 0.05 && danZaitz == true) {
         digitalWrite(0, HIGH);
         delayMicroseconds(100);
         digitalWrite(0, LOW);
         delayMicroseconds(175);
-     
+        danZaitz = false;
       }
       else {
+        if(desiredPhase > -3) {
+          if(p < desiredPhase - 0.1) {
+            danZaitz = true;
+          }
+        }
+        else {
+          if(p > desiredPhase + 0.1) {
+            danZaitz = true;
+          }
+        }
         delayMicroseconds(275);
       }
       Serial.print(p);
