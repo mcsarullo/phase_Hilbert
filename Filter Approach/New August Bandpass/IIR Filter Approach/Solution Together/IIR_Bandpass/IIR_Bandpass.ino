@@ -13,7 +13,7 @@ IIRFilter iir(b, a);
 void setup() {
   Serial.begin(115200);
   analogReadResolution(8);
-  analogReadAveraging(4);
+  analogReadAveraging(1);
     /*for(int i = 0; i < 16000; i++) {
       double out = iir.filter(x[i]);
       Serial.println(out);
@@ -34,7 +34,7 @@ double outH;
 double tmp;
 double p;
 int startTime;
-bool danZaitz = true; 
+bool checkWave = true; 
 
 void loop() {
 
@@ -72,22 +72,22 @@ void loop() {
       outH = tmp;
       
       p = atan2(outH, realLag[0]);
-      if(p > desiredPhase - 0.05 && p < desiredPhase + 0.05 && danZaitz == true) {
+      if(p > desiredPhase - 0.05 && p < desiredPhase + 0.05 && checkWave == true) {
         digitalWrite(0, HIGH);
-        delayMicroseconds(100);
+        delayMicroseconds(200);
         digitalWrite(0, LOW);
-        delayMicroseconds(175);
-        danZaitz = false;
+        delayMicroseconds(75);
+        checkWave = false;
       }
       else {
         if(desiredPhase > -3) {
           if(p < desiredPhase - 0.1) {
-            danZaitz = true;
+            checkWave = true;
           }
         }
         else {
           if(p > desiredPhase + 0.1) {
-            danZaitz = true;
+            checkWave = true;
           }
         }
         delayMicroseconds(275);
