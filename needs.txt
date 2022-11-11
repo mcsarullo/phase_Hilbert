@@ -1,0 +1,7 @@
+- Calculate difference in phase from desired (n=500)
+
+- bar graph comparing phase (subtract one from other)
+
+offline --> accruacy
+
+oscilloscope data --> real time delay

@@ -14,8 +14,8 @@
 xhat = filter(h,1,output); %resultant from Hilbert Transform H(w);
 hold on
 %plot(xhat)
-plot(x-mean(x))
-plot(output)
+%plot(x-mean(x))
+plot(output/4)
 
 real = output(1:length(output)-N);
 imag = xhat(1+N:length(xhat));
@@ -25,5 +25,6 @@ phase = atan2(imag,real);
 
 
 plot(phase)
+yline(0)
 %plot(angle(hilbert(output)))
-xlim([0 15000])
+xlim([10000 15000])
