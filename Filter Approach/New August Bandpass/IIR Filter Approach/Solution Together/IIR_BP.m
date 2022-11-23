@@ -1,7 +1,7 @@
 pointer = 0;
 bands = 30000;
-%x = downsample(eeg30000Hz, 10);
-x = downsample(eeg, 6);
+x = downsample(eeg30000Hz, 10);
+%x = downsample(eeg, 6);
 %cLen = length(h2);
 fs = 3000;
 bp = bandpass(x, [6 10], fs);
@@ -46,7 +46,7 @@ xlim([pointer pointer+bands])
 subplot(3,1,3)
 hold on
 plot(angle(hilbert(output(400:length(output)))), 'Color', 'k')
-plot(angle(hilbert(bp(1:length(bp)-400+1))), 'Color','c')
+plot(angle(hilbert(bp(1:length(bp)-400))), 'Color','c')
 title('MATLAB Baseline + Mine OVERLAY - PHASE')
 legend('My IIR Filter','MATLAB')
 xlabel('Samples')
