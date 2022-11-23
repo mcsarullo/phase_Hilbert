@@ -1,7 +1,7 @@
-- Calculate difference in phase from desired (n=500)
+TO DO
 
-- bar graph comparing phase (subtract one from other)
+find that one graph that shows frequencies being attentuated
 
-offline --> accruacy
 
+COMPARE TEENSY OUTPUT WITH MATLAB BASELINE
 oscilloscope data --> real time delay
