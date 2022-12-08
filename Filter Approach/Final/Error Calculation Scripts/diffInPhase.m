@@ -27,6 +27,7 @@ f = f(lag:length(f));
 p = angle(hilbert(f));
 
 diff = abs(p-p_baseline);
+%diff = abs(p-a_p);
 
 % PLOTS
 
