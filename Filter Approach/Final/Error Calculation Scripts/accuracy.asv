@@ -30,8 +30,6 @@
     acc = median(sepArray);
 
     hold on
-    histogram(sepArray, 20);
-    title('Histogram of Delays (in samples) between the MATLAB baseline and my IIR/FIR pipeline (20kHz @ 2.5kHz sampling)')
-    xlabel('Delay (in samples)');
-    ylabel('Number of Instances');
+    histogram(sepArray, 10);
+    title('Histogram of Dealys (in samples) between the MATLAB baseline and my IIR/FIR pipeline (20kHz @ 2.5kHz sampling')
 

@@ -1,11 +1,11 @@
 pointer = 0;
 bands = 30000;
-x = downsample(eeg30000Hz, 10);
-%x = downsample(eeg, 6);
+%x = downsample(eeg30000Hz, 10);
+x = downsample(eeg, 8);
 %cLen = length(h2);
-fs = 3000;
+fs = 2500;
 bp = bandpass(x, [6 10], fs);
-
+lag = 360;
 
 [b,a] = sos2tf(SOS,G);
 
@@ -34,7 +34,7 @@ xlim([pointer, pointer+bands])
 subplot(3,1,2)
 hold on
 plot(bp)
-plot(output(400:length(output)))
+plot(output(lag:length(output)))
 
 legend('MATLAB bandpass()', 'My IIR Filter')
 title('MATLAB Baseline with IIR Output Overlay')
@@ -45,8 +45,8 @@ xlim([pointer pointer+bands])
 
 subplot(3,1,3)
 hold on
-plot(angle(hilbert(output(400:length(output)))), 'Color', 'k')
-plot(angle(hilbert(bp(1:length(bp)-400))), 'Color','c')
+plot(angle(hilbert(output(lag:length(output)))), 'Color', 'k')
+plot(angle(hilbert(bp(1:length(bp)-lag))), 'Color','c')
 title('MATLAB Baseline + Mine OVERLAY - PHASE')
 legend('My IIR Filter','MATLAB')
 xlabel('Samples')
@@ -54,4 +54,4 @@ ylabel('Magnitude')
 xlim([pointer pointer+bands])
 ylim([-4 4])
 
-output=output(400:length(output));
+output=output(lag:length(output));

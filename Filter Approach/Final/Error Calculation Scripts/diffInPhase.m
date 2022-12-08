@@ -13,9 +13,10 @@ pointer = 10000;
 bands = 1000;
 
 
-x = downsample(eeg30000Hz, 10);
-fs = 3000;
-lag = 401;
+%x = downsample(eeg30000Hz, 10);
+x = downsample(eeg, 8);
+fs = 2500;
+lag = 360;
 f_baseline = bandpass(x, [6 10], fs);
 p_baseline = angle(hilbert(f_baseline));
 p_baseline = p_baseline(1:length(p_baseline)-lag+1);
